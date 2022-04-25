@@ -8,10 +8,11 @@
   --white: #ffffff;
   --gray-1: #f6f6f6;
   --gray-2: #ddd;
+  --gray-3: #34495e;
   --text-color: #444;
   --text-primary-color-1: #ffffff;
 
-  --border: 1px solid var(var(--gray-2));
+  --border: 1px solid var(--gray-2);
   --border-radius: 4px;
 
   --font-family: "Roboto", sans-serif;
@@ -69,7 +70,7 @@ body {
   justify-content: center;
 }
 
-.align-items {
+.align-items-center {
   align-items: center;
 }
 
@@ -87,6 +88,11 @@ body {
   padding: 20px;
 }
 
+.px-20 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .p-30 {
   padding: 30px;
 }
@@ -96,11 +102,47 @@ body {
 .m-10 {
   margin: 10px;
 }
+.mr-10 {
+  margin-right: 10px;
+}
+.mb-10 {
+  margin-bottom: 10px;
+}
 
 .m-20 {
   margin: 20px;
 }
+.mr-20 {
+  margin-right: 20px;
+}
 
 .m-30 {
   margin: 30px;
+}
+
+// btn
+
+.btn {
+  padding: 8px 15px;
+  font-weight: 500;
+  border: 0;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--primary-1);
+  color: var(--text-primary-color-1);
+  &:hover {
+    background-color: var(--primary-2);
+  }
+}
+
+.btn-danger {
+  background-color: var(--danger-1);
+  color: var(--text-primary-color-1);
+  &:hover {
+    background-color: var(--danger-2);
+  }
 }
