@@ -1,21 +1,38 @@
 <template>
   <div class="product d-flex flex-column">
-    <div class="product-image"></div>
+    <div
+      class="product-image"
+      :style="{ backgroundImage: `url(${product.image})` }"
+    ></div>
     <div class="p-10 d-flex flex-column">
-      <h4>MacBook Pro</h4>
+      <h4>{{ product.title }}</h4>
       <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur,
-        amet!
+        {{ product.description }}
       </p>
       <div class="d-flex flex-row align-items-center">
-        <strong class="flex-fill">Prix : 1500€</strong>
-        <button class="btn btn-primary">Ajoutez au panier</button>
+        <strong class="flex-fill">Prix : {{ product.price }}€</strong>
+        <button
+          @click="emit('addProductToCart', product.id)"
+          class="btn btn-primary"
+        >
+          Ajoutez au panier
+        </button>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { ProductInterface } from "@/interfaces/product.interface";
+
+defineProps<{
+  product: ProductInterface;
+}>();
+
+const emit = defineEmits<{
+  (e: "addProductToCart", productId: number): void;
+}>();
+</script>
 
 <style lang="scss" scoped>
 .product {
@@ -25,10 +42,9 @@
   &-image {
     border-top-left-radius: var(--border-radius);
     border-top-right-radius: var(--border-radius);
-    background-image: url(../../assets/MacBookPro.webp);
     background-position: center;
     background-size: cover;
-    height: 150px;
+    height: 250px;
   }
 }
 </style>
