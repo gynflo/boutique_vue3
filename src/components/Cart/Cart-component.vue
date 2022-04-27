@@ -9,10 +9,10 @@
 </template>
 
 <script setup lang="ts">
-import type { ProductInterface } from "@/interfaces/product.interface";
+import type { ProductCartInterface } from "@/interfaces";
 import CartProductList from "./CartProductList.vue";
 const props = defineProps<{
-  cart: ProductInterface[];
+  cart: ProductCartInterface[];
 }>();
 const emit = defineEmits<{
   (e: "removeProductFromCart", productId: number): void;

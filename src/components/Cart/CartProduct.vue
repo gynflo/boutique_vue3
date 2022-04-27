@@ -1,6 +1,7 @@
 <template>
   <div class="d-flex flex-row align-items-center mb-10 p-10 product">
-    <strong class="flex-fill">{{ props.product.title }}</strong>
+    <strong class="mr-10">{{ props.product.title }}</strong>
+    <span class="flex-fill mr-10">x {{ props.product.quantity }}</span>
     <span class="mr-10">Prix: {{ props.product.price }}€</span>
     <button
       class="btn btn-danger"
@@ -12,10 +13,10 @@
 </template>
 
 <script setup lang="ts">
-import type { ProductInterface } from "@/interfaces/product.interface";
+import type { ProductCartInterface } from "@/interfaces";
 
 const props = defineProps<{
-  product: ProductInterface;
+  product: ProductCartInterface;
 }>();
 const emit = defineEmits<{
   (e: "removeProductFromCart", productId: number): void;

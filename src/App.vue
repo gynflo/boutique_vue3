@@ -23,11 +23,11 @@ import Shop from "./components/Shop/Shop-component.vue";
 // Import de la data statique
 import data from "./data/product";
 import { reactive } from "vue";
-import type { ProductInterface } from "./interfaces/product.interface";
+import type { ProductCartInterface, ProductInterface } from "./interfaces";
 
 const state = reactive<{
   products: ProductInterface[];
-  cart: ProductInterface[];
+  cart: ProductCartInterface[];
 }>({
   products: data,
   cart: [],
@@ -36,13 +36,28 @@ const state = reactive<{
 // void => absence de valeur
 function addProductToCart(productId: number): void {
   const product = state.products.find((product) => product.id === productId);
-  if (product && !state.cart.find((product) => product.id === productId)) {
-    // déconstruction de l'objet pour supprimmer toute référence (light copy)
-    state.cart.push({ ...product });
+  if (product) {
+    const checkProductInCart = state.cart.find(
+      (product) => product.id === productId
+    );
+    if (checkProductInCart) {
+      checkProductInCart.quantity++;
+    } else {
+      state.cart.push({ ...product, quantity: 1 });
+    }
   }
 }
 function removeProductFromCart(productId: number): void {
-  state.cart = state.cart.filter((product) => product.id !== productId);
+  const checkProductFromCart = state.cart.find(
+    (product) => product.id === productId
+  );
+  if (checkProductFromCart) {
+    if (checkProductFromCart.quantity === 1) {
+      state.cart = state.cart.filter((product) => product.id !== productId);
+    } else {
+      checkProductFromCart.quantity--;
+    }
+  }
 }
 </script>
 
