@@ -6,7 +6,11 @@
       :products="state.products"
       @add-product-to-cart="addProductToCart"
     />
-    <Cart class="cart" />
+    <Cart
+      class="cart"
+      :cart="state.cart"
+      @remove-product-from-cart="removeProductFromCart"
+    />
     <TheFooter class="footer" />
   </div>
 </template>
@@ -36,6 +40,9 @@ function addProductToCart(productId: number): void {
     // déconstruction de l'objet pour supprimmer toute référence (light copy)
     state.cart.push({ ...product });
   }
+}
+function removeProductFromCart(productId: number): void {
+  state.cart = state.cart.filter((product) => product.id !== productId);
 }
 </script>
 
