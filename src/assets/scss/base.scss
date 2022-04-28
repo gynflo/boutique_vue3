@@ -139,6 +139,14 @@ body {
   }
 }
 
+.btn-success {
+  background-color: var(--success-1);
+  color: var(--text-primary-color-1);
+  &:hover {
+    background-color: var(--success-2);
+  }
+}
+
 .btn-danger {
   background-color: var(--danger-1);
   color: var(--text-primary-color-1);
