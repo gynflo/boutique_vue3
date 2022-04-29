@@ -52,6 +52,12 @@ body {
   font-family: var(--font-family);
 }
 
+input {
+  border: var(--border);
+  border-radius: var(--border-radius);
+  padding: 8px 15px;
+}
+
 // flex
 
 .d-flex {
@@ -99,6 +105,16 @@ body {
 
 // margin
 
+.m-5 {
+  margin: 5px;
+}
+.mr-5 {
+  margin-right: 5px;
+}
+.mb-5 {
+  margin-bottom: 5px;
+}
+
 .m-10 {
   margin: 10px;
 }
@@ -114,6 +130,9 @@ body {
 }
 .mr-20 {
   margin-right: 20px;
+}
+.mb-20 {
+  margin-bottom: 20px;
 }
 
 .m-30 {
