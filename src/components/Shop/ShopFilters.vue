@@ -34,11 +34,23 @@
         }}</label>
       </div>
     </section>
+    <section class="mb-20">
+      <h3 class="mb-10">Trier par categories :</h3>
+      <p
+        :class="{ selected: category === filters.category }"
+        class="category"
+        v-for="(category, id) in (['all', 'desktop', 'gamer', 'streaming'] as Category[])"
+        :key="id"
+        @click="emit('updateFilter', { category })"
+      >
+        {{ category }}
+      </p>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { FilterUpdate, FiltersInterface } from "@/interfaces";
+import type { FilterUpdate, FiltersInterface, Category } from "@/interfaces";
 
 defineProps<{
   filters: FiltersInterface;
@@ -49,4 +61,20 @@ const emit = defineEmits<{
 }>();
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.category {
+  font-size: 14px;
+  line-height: 18px;
+  cursor: pointer;
+  &:hover {
+    font-size: 20px;
+    font-weight: 700;
+  }
+}
+
+.selected {
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: underline;
+}
+</style>
