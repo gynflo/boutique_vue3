@@ -1,6 +1,7 @@
 /* eslint-disable vue/require-v-for-key */
 <template>
-  <div class="p-20">
+  <div class="d-flex flex-column p-20">
+    <!-- section filtered name -->
     <section class="mb-20">
       <h3 class="mb-10">Recherchez :</h3>
       <input
@@ -10,6 +11,7 @@
         placeholder="Rechercher"
       />
     </section>
+    <!-- section filtered price -->
     <section class="mb-20">
       <h3 class="mb-10">Trier par prix :</h3>
 
@@ -34,7 +36,8 @@
         }}</label>
       </div>
     </section>
-    <section class="mb-20">
+    <!-- section filtered category -->
+    <section class="mb-20 flex-fill">
       <h3 class="mb-10">Trier par categories :</h3>
       <p
         :class="{ selected: category === filters.category }"
@@ -46,6 +49,12 @@
         {{ category }}
       </p>
     </section>
+    <small class="mb-5"
+      >Nombre de résultats: <strong>{{ nbrOfResults }}</strong></small
+    >
+    <button class="btn btn-danger m-20" @click="emit('updateFilter', {})">
+      Supprimer les filtres
+    </button>
   </div>
 </template>
 
@@ -54,6 +63,7 @@ import type { FilterUpdate, FiltersInterface, Category } from "@/interfaces";
 
 defineProps<{
   filters: FiltersInterface;
+  nbrOfResults: number;
 }>();
 
 const emit = defineEmits<{
