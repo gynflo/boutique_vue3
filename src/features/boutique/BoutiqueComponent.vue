@@ -24,9 +24,7 @@
 <script setup lang="ts">
 import Cart from "./components/Cart/Cart-component.vue";
 import Shop from "./components/Shop/Shop-component.vue";
-import data from "@/data/product";
 
-// Import de la data statique
 import { DEFAULT_FILTERS } from "@/data/filters";
 import { reactive, computed } from "vue";
 import type {
@@ -41,12 +39,18 @@ const state = reactive<{
   cart: ProductCartInterface[];
   filters: FiltersInterface;
 }>({
-  products: data,
+  products: [],
   cart: [],
   filters: { ...DEFAULT_FILTERS },
 });
 
 const cartIsEmpty = computed(() => state.cart.length === 0);
+const products = await (
+  await fetch("https://restapi.fr/api/productVueGynflo")
+).json();
+if (products && Array.isArray(products)) {
+  state.products = products;
+} else [products];
 
 const filtersProduct = computed(() => {
   return state.products.filter((product) => {
@@ -66,11 +70,11 @@ const filtersProduct = computed(() => {
   });
 });
 
-function addProductToCart(productId: number): void {
-  const product = state.products.find((product) => product.id === productId);
+function addProductToCart(productId: string): void {
+  const product = state.products.find((product) => product._id === productId);
   if (product) {
     const checkProductInCart = state.cart.find(
-      (product) => product.id === productId
+      (product) => product._id === productId
     );
     if (checkProductInCart) {
       checkProductInCart.quantity++;
@@ -79,13 +83,13 @@ function addProductToCart(productId: number): void {
     }
   }
 }
-function removeProductFromCart(productId: number): void {
+function removeProductFromCart(productId: string): void {
   const checkProductFromCart = state.cart.find(
-    (product) => product.id === productId
+    (product) => product._id === productId
   );
   if (checkProductFromCart) {
     if (checkProductFromCart.quantity === 1) {
-      state.cart = state.cart.filter((product) => product.id !== productId);
+      state.cart = state.cart.filter((product) => product._id !== productId);
     } else {
       checkProductFromCart.quantity--;
     }

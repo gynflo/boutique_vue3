@@ -12,7 +12,7 @@
       <div class="d-flex flex-row align-items-center">
         <strong class="flex-fill">Prix : {{ product.price }}€</strong>
         <button
-          @click="emit('addProductToCart', product.id)"
+          @click="emit('addProductToCart', product._id)"
           class="btn btn-primary"
         >
           Ajoutez au panier

@@ -2,7 +2,7 @@
   <div class="d-flex flex-column">
     <CartProduct
       v-for="product of props.cart"
-      :key="product.id"
+      :key="product._id"
       :product="product"
       @remove-product-from-cart="emits('removeProductFromCart', $event)"
     />
@@ -16,7 +16,7 @@ const props = defineProps<{
   cart: ProductCartInterface[];
 }>();
 const emits = defineEmits<{
-  (e: "removeProductFromCart", productId: number): void;
+  (e: "removeProductFromCart", productId: string): void;
 }>();
 </script>
 

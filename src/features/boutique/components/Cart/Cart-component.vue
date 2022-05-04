@@ -18,7 +18,7 @@ const props = defineProps<{
   cart: ProductCartInterface[];
 }>();
 const emit = defineEmits<{
-  (e: "removeProductFromCart", productId: number): void;
+  (e: "removeProductFromCart", productId: string): void;
 }>();
 const totalPrice = computed(() =>
   props.cart.reduce((acc, product) => {

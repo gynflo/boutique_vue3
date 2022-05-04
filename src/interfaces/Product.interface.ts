@@ -2,7 +2,7 @@ import type { Category } from "./type";
 
 export interface ProductInterface {
   _id: string;
-  createdAt: string,
+  createdAt: string;
   title: string;
   image: string;
   price: number;

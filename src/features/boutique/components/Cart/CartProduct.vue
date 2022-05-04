@@ -5,7 +5,7 @@
     <span class="mr-10">Prix: {{ props.product.price }}€</span>
     <button
       class="btn btn-danger"
-      @click="emit('removeProductFromCart', product.id)"
+      @click="emit('removeProductFromCart', product._id)"
     >
       Supprimez
     </button>
@@ -19,7 +19,7 @@ const props = defineProps<{
   product: ProductCartInterface;
 }>();
 const emit = defineEmits<{
-  (e: "removeProductFromCart", productId: number): void;
+  (e: "removeProductFromCart", productId: string): void;
 }>();
 </script>
 
