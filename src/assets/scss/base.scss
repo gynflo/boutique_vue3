@@ -41,6 +41,7 @@ img {
 a {
   color: var(--text-color);
   text-decoration: none;
+  cursor: pointer;
 }
 
 body {
@@ -52,10 +53,23 @@ body {
   font-family: var(--font-family);
 }
 
-input {
+input,
+textarea,
+select {
   border: var(--border);
   border-radius: var(--border-radius);
   padding: 8px 15px;
+}
+label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-3);
+}
+
+.form-error {
+  color: var(--danger-1);
+  font-size: 14px;
+  font-weight: 500;
 }
 
 // flex
@@ -172,4 +186,13 @@ input {
   &:hover {
     background-color: var(--danger-2);
   }
+}
+
+// Card
+
+.card {
+  border: var(--border);
+  border-radius: var(--border-radius);
+  background-color: #fff;
+  padding: 30px;
 }
