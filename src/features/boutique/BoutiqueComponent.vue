@@ -26,13 +26,14 @@ import Cart from "./components/Cart/Cart-component.vue";
 import Shop from "./components/Shop/Shop-component.vue";
 
 import { DEFAULT_FILTERS } from "@/data/filters";
-import { reactive, computed } from "vue";
+import { reactive, computed, watchEffect } from "vue";
 import type {
   ProductCartInterface,
   ProductInterface,
   FiltersInterface,
   FilterUpdate,
 } from "@/interfaces";
+import { fetchProduct } from "@/shared/services/product.service";
 
 const state = reactive<{
   products: ProductInterface[];
@@ -44,14 +45,16 @@ const state = reactive<{
   filters: { ...DEFAULT_FILTERS },
 });
 
-const cartIsEmpty = computed(() => state.cart.length === 0);
-const products = await (
-  await fetch("https://restapi.fr/api/productVueGynflo")
-).json();
-if (products && Array.isArray(products)) {
-  state.products = products;
-} else [products];
+watchEffect(async () => {
+  const products = await fetchProduct(state.filters);
+  if (Array.isArray(products)) {
+    state.products = products;
+  } else {
+    state.products = [products];
+  }
+});
 
+const cartIsEmpty = computed(() => state.cart.length === 0);
 const filtersProduct = computed(() => {
   return state.products.filter((product) => {
     if (

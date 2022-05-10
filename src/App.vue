@@ -20,7 +20,7 @@ import { reactive, type Component as C } from "vue";
 import type { Page } from "@/interfaces";
 // Seeding Dev
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { seed } from "./data/seed";
+import { seed, seed50Articles } from "./data/seed";
 
 const state = reactive<{
   page: Page;
@@ -33,8 +33,11 @@ const pages: { [s: string]: C } = {
 function navigate(page: Page): void {
   state.page = page;
 }
+// SEED //
+//seed("products");
+//seed50Articles("products");
 
-// seed("productVueGynflo");
+
 </script>
 
 <style lang="scss">
