@@ -19,7 +19,7 @@ import Admin from "./features/admin/AdminComponent.vue";
 import { reactive, type Component as C } from "vue";
 import type { Page } from "@/interfaces";
 // Seeding Dev
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 import { seed, seed50Articles } from "./data/seed";
 
 const state = reactive<{
