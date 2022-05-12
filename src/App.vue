@@ -19,8 +19,7 @@ import Admin from "./features/admin/AdminComponent.vue";
 import { reactive, type Component as C } from "vue";
 import type { Page } from "@/interfaces";
 // Seeding Dev
-
-import { seed, seed50Articles } from "./data/seed";
+import { seed, seed40Articles } from "./data/seed";
 
 const state = reactive<{
   page: Page;
@@ -35,7 +34,7 @@ function navigate(page: Page): void {
 }
 // SEED //
 //seed("products");
-//seed50Articles("products");
+//seed40Articles("products");
 
 
 </script>

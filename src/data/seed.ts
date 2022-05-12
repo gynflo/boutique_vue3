@@ -10,7 +10,7 @@ export async function seed(collectionName: string) {
   });
 }
 
-export async function seed50Articles(collectionName: string) {
+export async function seed40Articles(collectionName: string) {
   await fetch(`https://restapi.fr/generator`, {
     method: "POST",
     body: JSON.stringify({

@@ -9,8 +9,11 @@
       class="shop"
       :products="filtersProduct"
       :filters="state.filters"
+      :more-results="state.moreResults"
+      :page="state.page"
       @add-product-to-cart="addProductToCart"
       @update-filter="updateFilter"
+      @inc-page="state.page++"
     />
     <Cart
       v-if="!cartIsEmpty"
@@ -26,7 +29,7 @@ import Cart from "./components/Cart/Cart-component.vue";
 import Shop from "./components/Shop/Shop-component.vue";
 
 import { DEFAULT_FILTERS } from "@/data/filters";
-import { reactive, computed, watchEffect } from "vue";
+import { reactive, computed, watchEffect, watch, provide, toRef } from "vue";
 import type {
   ProductCartInterface,
   ProductInterface,
@@ -34,37 +37,50 @@ import type {
   FilterUpdate,
 } from "@/interfaces";
 import { fetchProduct } from "@/shared/services/product.service";
+import { pageKey } from "@/shared/injectionKeys/pageKey";
 
 const state = reactive<{
   products: ProductInterface[];
   cart: ProductCartInterface[];
   filters: FiltersInterface;
+  page: number;
+  isLoading: boolean;
+  moreResults: boolean;
 }>({
   products: [],
   cart: [],
   filters: { ...DEFAULT_FILTERS },
+  page: 1,
+  isLoading: true,
+  moreResults: true,
+});
+
+provide(pageKey, toRef(state, "page"));
+
+watch(state.filters, () => {
+  state.page = 1;
+  state.products = [];
 });
 
 watchEffect(async () => {
-  const products = await fetchProduct(state.filters);
+  state.isLoading = true;
+  const products = await fetchProduct(state.filters, state.page);
   if (Array.isArray(products)) {
-    state.products = products;
+    state.products = [...state.products, ...products];
+    if (products.length < 20) {
+      state.moreResults = false;
+    }
   } else {
-    state.products = [products];
+    state.products = [...state.products, products];
   }
 });
+state.isLoading = false;
 
 const cartIsEmpty = computed(() => state.cart.length === 0);
 const filtersProduct = computed(() => {
   return state.products.filter((product) => {
     if (
-      product.title
-        .toLowerCase()
-        .startsWith(state.filters.search.toLowerCase()) &&
-      product.price >= state.filters.priceRange[0] &&
-      product.price <= state.filters.priceRange[1] &&
-      (product.category === state.filters.category ||
-        state.filters.category === "all")
+      product.title.toLowerCase().startsWith(state.filters.search.toLowerCase())
     ) {
       return true;
     } else {

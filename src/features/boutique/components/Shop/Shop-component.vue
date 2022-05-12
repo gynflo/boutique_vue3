@@ -9,7 +9,9 @@
     <ShopProductList
       class="flex-fill scrollable"
       :products="products"
+      :more-results="moreResults"
       @add-product-to-cart="emit('addProductToCart', $event)"
+      @inc-page="emit('incPage')"
     />
   </div>
 </template>
@@ -26,11 +28,13 @@ import ShopFilters from "./ShopFilters.vue";
 defineProps<{
   products: ProductInterface[];
   filters: FiltersInterface;
+  moreResults: boolean;
 }>();
 
 const emit = defineEmits<{
   (e: "addProductToCart", productId: string): void;
   (e: "updateFilter", updateFilter: FilterUpdate): void;
+  (e: "incPage"): void;
 }>();
 </script>
 
