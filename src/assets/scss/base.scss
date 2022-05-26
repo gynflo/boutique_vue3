@@ -1,3 +1,5 @@
+@use "./mixin";
+
 :root {
   --primary-1: #3498db;
   --primary-2: #2980b9;
@@ -195,4 +197,11 @@ label {
   border-radius: var(--border-radius);
   background-color: #fff;
   padding: 30px;
+}
+
+// media-queries xs
+.hide-xs {
+  @include mixin.xs {
+    display: none;
+  }
 }

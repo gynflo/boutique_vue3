@@ -1,3 +1,10 @@
+/* XSmall devices (landscape phones, 576px and up) */
+@mixin xs {
+  @media (max-width: 575px) {
+    @content;
+  }
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @mixin sm {
   @media (min-width: 576px) {

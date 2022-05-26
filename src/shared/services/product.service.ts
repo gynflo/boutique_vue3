@@ -17,7 +17,7 @@ export async function fetchProduct(
   query.append("price", `$gte:${filter.priceRange[0]}`);
 
   const products = await (
-    await fetch(`https://restapi.fr/api/products?${query}`)
+    await fetch(`https://restapi.fr/api/projetProducts?${query}`)
   ).json();
   return products;
 }
