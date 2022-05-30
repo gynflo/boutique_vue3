@@ -1,29 +1,3 @@
-<template>
-  <div
-    class="boutique-container"
-    :class="{
-      'grid-empty': cartIsEmpty,
-    }"
-  >
-    <Shop
-      class="shop"
-      :products="filtersProduct"
-      :filters="state.filters"
-      :more-results="state.moreResults"
-      :page="state.page"
-      @add-product-to-cart="addProductToCart"
-      @update-filter="updateFilter"
-      @inc-page="state.page++"
-    />
-    <Cart
-      v-if="!cartIsEmpty"
-      class="cart"
-      :cart="state.cart"
-      @remove-product-from-cart="removeProductFromCart"
-    />
-  </div>
-</template>
-
 <script setup lang="ts">
 import Cart from "./components/Cart/Cart-component.vue";
 import Shop from "./components/Shop/Shop-component.vue";
@@ -57,7 +31,7 @@ const state = reactive<{
 
 provide(pageKey, toRef(state, "page"));
 
-watch(state.filters, () => {
+watch([() => state.filters.priceRange, () => state.filters.category], () => {
   state.page = 1;
   state.products = [];
 });
@@ -76,7 +50,6 @@ watchEffect(async () => {
 });
 state.isLoading = false;
 
-const cartIsEmpty = computed(() => state.cart.length === 0);
 const filtersProduct = computed(() => {
   return state.products.filter((product) => {
     if (
@@ -127,16 +100,23 @@ function updateFilter(filterUpdate: FilterUpdate) {
 }
 </script>
 
-<style lang="scss">
-.boutique-container {
-  display: grid;
-  grid-template-columns: 75% 25%;
-}
-.grid-empty {
-  grid-template-columns: 100%;
-}
-.cart {
-  background-color: white;
-  border-left: var(--border);
-}
-</style>
+<template>
+  <div class="d-flex flex-column">
+    <Shop
+      class="shop"
+      :products="filtersProduct"
+      :filters="state.filters"
+      :more-results="state.moreResults"
+      :page="state.page"
+      @add-product-to-cart="addProductToCart"
+      @update-filter="updateFilter"
+      @inc-page="state.page++"
+    />
+    <Cart
+      :cart="state.cart"
+      @remove-product-from-cart="removeProductFromCart"
+    />
+  </div>
+</template>
+
+<style lang="scss"></style>

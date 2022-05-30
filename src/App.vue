@@ -1,42 +1,26 @@
 <template>
   <div class="app-container">
-    <TheHeader class="header" :page="state.page" @navigate="navigate" />
-    <Suspense
-      ><div class="app-content">
-        <component :is="pages[state.page]" /></div
-    ></Suspense>
+    <TheHeader class="header" />
+    <router-view v-slot="{ Component }">
+      <template v-if="Component">
+        <Suspense>
+          <div class="app-content">
+            <component :is="Component" />
+          </div> </Suspense
+      ></template>
+    </router-view>
 
-    <TheFooter class="footer" />
+    <TheFooter class="footer hise-xs" />
   </div>
 </template>
 
 <script setup lang="ts">
 import TheHeader from "./components/Header-component.vue";
 import TheFooter from "./components/Footer-component.vue";
-import Boutique from "./features/boutique/BoutiqueComponent.vue";
-import Admin from "./features/admin/AdminComponent.vue";
-
-import { reactive, type Component as C } from "vue";
-import type { Page } from "@/interfaces";
 // Seeding Dev
-import { seed, seed40Articles } from "./data/seed";
-
-const state = reactive<{
-  page: Page;
-}>({ page: "Boutique" });
-
-const pages: { [s: string]: C } = {
-  Boutique,
-  Admin,
-};
-function navigate(page: Page): void {
-  state.page = page;
-}
-// SEED //
-//seed("products");
-//seed40Articles("products");
-
-
+//import { seed, seed20Articles } from "./data/seed";
+//seed("projetProducts");
+//seed20Articles("projetProducts");
 </script>
 
 <style lang="scss">

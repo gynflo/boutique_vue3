@@ -1,17 +1,12 @@
 <script setup lang="ts">
-import type { Page } from "@/interfaces";
 import { reactive } from "vue";
+import Calc from "@/components/Calc-component.vue";
 
 const state = reactive<{
   isOpen: boolean;
-}>({ isOpen: false });
-
-const props = defineProps<{
-  page: Page;
-}>();
-const emit = defineEmits<{
-  (e: "navigate", page: Page): void;
-}>();
+}>({
+  isOpen: false,
+});
 </script>
 
 <template>
@@ -23,20 +18,10 @@ const emit = defineEmits<{
     <div class="d-flex align-items-center flex-fill actions-container">
       <ul class="d-flex flex-fill hide-xs">
         <li class="mr-10">
-          <a
-            href="#"
-            :class="{ active: props.page === 'Boutique' }"
-            @click="emit('navigate', 'Boutique')"
-            >Boutique</a
-          >
+          <router-link to="/boutique">Boutique</router-link>
         </li>
         <li>
-          <a
-            href="#"
-            @click="emit('navigate', 'Admin')"
-            :class="{ active: props.page === 'Admin' }"
-            >Admin</a
-          >
+          <router-link to="/admin">Admin</router-link>
         </li>
       </ul>
       <ul class="d-flex hide-xs">
@@ -48,6 +33,11 @@ const emit = defineEmits<{
         </li>
       </ul>
       <div class="menu-xs-container">
+        <Calc
+          :open="state.isOpen"
+          @close="state.isOpen = false"
+          :transparent="true"
+        />
         <i class="uil uil-bars" @click="state.isOpen = !state.isOpen"></i>
         <Transition>
           <ul
@@ -56,20 +46,10 @@ const emit = defineEmits<{
             v-if="state.isOpen"
           >
             <li>
-              <a
-                href="#"
-                :class="{ active: props.page === 'Boutique' }"
-                @click="emit('navigate', 'Boutique')"
-                >Boutique</a
-              >
+              <router-link to="/bouitque">Boutique</router-link>
             </li>
             <li>
-              <a
-                href="#"
-                @click="emit('navigate', 'Admin')"
-                :class="{ active: props.page === 'Admin' }"
-                >Admin</a
-              >
+              <router-link to="/admin">Admin</router-link>
             </li>
             <li>
               <a href="#">Inscription</a>
@@ -97,9 +77,6 @@ header {
     .logo {
       font-size: 20px;
       font-weight: bold;
-    }
-    &.active {
-      text-decoration: underline;
     }
   }
   i {

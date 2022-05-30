@@ -74,6 +74,10 @@ label {
   font-weight: 500;
 }
 
+ .router-link-active {
+    text-decoration: underline;
+  }
+
 // flex
 
 .d-flex {
@@ -149,6 +153,10 @@ label {
 }
 .mb-20 {
   margin-bottom: 20px;
+}
+
+.ml-20 {
+  margin-left: 20px;
 }
 
 .m-30 {
