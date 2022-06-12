@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import type { ProductInterface } from "@/shared/interfaces";
+
+defineProps<{
+  product: ProductInterface;
+}>();
+
+const emit = defineEmits<{
+  (e: "addProductToCart", productId: string): void;
+}>();
+</script>
+
 <template>
   <div class="product d-flex flex-column">
     <div
@@ -21,18 +33,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import type { ProductInterface } from "@/interfaces";
-
-defineProps<{
-  product: ProductInterface;
-}>();
-
-const emit = defineEmits<{
-  (e: "addProductToCart", productId: string): void;
-}>();
-</script>
 
 <style lang="scss" scoped>
 .product {

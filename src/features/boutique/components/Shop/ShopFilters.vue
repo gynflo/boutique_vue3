@@ -1,4 +1,20 @@
-/* eslint-disable vue/require-v-for-key */
+<script setup lang="ts">
+import type {
+  FilterUpdate,
+  FiltersInterface,
+  Category,
+} from "@/shared/interfaces";
+
+defineProps<{
+  filters: FiltersInterface;
+  nbrOfResults: number;
+}>();
+
+const emit = defineEmits<{
+  (e: "updateFilter", filterUpdate: FilterUpdate): void;
+}>();
+</script>
+
 <template>
   <div class="d-flex flex-column p-20">
     <!-- section filtered name -->
@@ -24,7 +40,7 @@
           :checked="filters.priceRange[0] === priceRange[0]"
           type="radio"
           name="priceRange"
-          :id="priceRange[0].toString()"
+          :id="priceRange[0] + ''"
           @input="emit('updateFilter', { priceRange })"
         />
         <label :for="priceRange[0] + ''">{{
@@ -57,19 +73,6 @@
     </button>
   </div>
 </template>
-
-<script setup lang="ts">
-import type { FilterUpdate, FiltersInterface, Category } from "@/interfaces";
-
-defineProps<{
-  filters: FiltersInterface;
-  nbrOfResults: number;
-}>();
-
-const emit = defineEmits<{
-  (e: "updateFilter", filterUpdate: FilterUpdate): void;
-}>();
-</script>
 
 <style lang="scss" scoped>
 .category {

@@ -1,20 +1,19 @@
 <script lang="ts" setup>
-import {
-  useFetchProducts,
-  tryDeleteProduct,
-} from "@/shared/services/product.service";
+import { useAdminProducts } from "../stores/adminProduct.store";
+const adminProductStore = useAdminProducts();
 
-const { products, loading, error } = useFetchProducts();
+function tryDeleteProduct(productId: string) {
+  adminProductStore.deleteProduct(productId);
+}
 </script>
 
 <template>
   <div class="container card">
     <h1>Liste des produits</h1>
-    <h3 v-if="error">Error</h3>
-    <h3 v-else-if="loading">Chargement...</h3>
+    <h3 v-if="adminProductStore.isLoading">Chargement...</h3>
     <ul v-else>
       <li
-        v-for="product of products"
+        v-for="product of adminProductStore.products"
         :key="product._id"
         class="d-flex align-items-center"
       >

@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import type { ProductInterface } from "@/interfaces/Product.interface";
-import {
-  addProduct,
-  editProduct,
-  getProductById,
-} from "@/shared/services/product.service";
+import type { ProductInterface } from "@//shared/interfaces/Product.interface";
+import { getProductById } from "@/shared/services/product.service";
 import { toFormValidator } from "@vee-validate/zod";
 import { useField, useForm } from "vee-validate";
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { z } from "zod";
+import { useAdminProducts } from "../stores/adminProduct.store";
 
 const product = ref<ProductInterface | null>(null);
 const firstInput = ref<HTMLInputElement | null>(null);
 const required = { required_error: "Veuillez renseigner ce champ" };
-
+const adminProductStore = useAdminProducts();
 const route = useRoute();
 const router = useRouter();
 if (route.params.productId) {
@@ -75,9 +72,9 @@ const category = useField("category");
 const trySubmit = handleSubmit(async (formValues) => {
   try {
     if (!product.value) {
-      await addProduct(formValues);
+      await adminProductStore.addProduct(formValues);
     } else {
-      await editProduct(product.value._id, formValues);
+      await adminProductStore.editProduct(product.value._id, formValues);
     }
     router.push("/admin/productlist");
     firstInput.value?.focus;

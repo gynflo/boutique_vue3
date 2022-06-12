@@ -1,3 +1,14 @@
+<script setup lang="ts">
+import type { ProductCartInterface } from "@/shared/interfaces";
+
+const props = defineProps<{
+  product: ProductCartInterface;
+}>();
+const emit = defineEmits<{
+  (e: "removeProductFromCart", productId: string): void;
+}>();
+</script>
+
 <template>
   <div class="d-flex flex-row align-items-center mb-10 p-10 product">
     <strong class="mr-10">{{ props.product.title }}</strong>
@@ -11,17 +22,6 @@
     </button>
   </div>
 </template>
-
-<script setup lang="ts">
-import type { ProductCartInterface } from "@/interfaces";
-
-const props = defineProps<{
-  product: ProductCartInterface;
-}>();
-const emit = defineEmits<{
-  (e: "removeProductFromCart", productId: string): void;
-}>();
-</script>
 
 <style lang="scss" scoped>
 .product {

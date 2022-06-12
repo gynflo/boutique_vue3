@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import CartProduct from "./CartProduct.vue";
+
+import type { ProductCartInterface } from "@/shared/interfaces";
+const props = defineProps<{
+  cart: ProductCartInterface[];
+}>();
+const emits = defineEmits<{
+  (e: "removeProductFromCart", productId: string): void;
+}>();
+</script>
+
 <template>
   <div class="d-flex flex-column">
     <CartProduct
@@ -9,15 +21,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import type { ProductCartInterface } from "@/interfaces";
-import CartProduct from "./CartProduct.vue";
-const props = defineProps<{
-  cart: ProductCartInterface[];
-}>();
-const emits = defineEmits<{
-  (e: "removeProductFromCart", productId: string): void;
-}>();
-</script>
+
 
 <style lang="scss" scoped></style>

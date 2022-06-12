@@ -1,25 +1,28 @@
 <script setup lang="ts">
+import ShopProductList from "./ShopProductList.vue";
+import ShopFilters from "./ShopFilters.vue";
+import Calc from "@/components/Calc-component.vue";
+
 import type {
   FiltersInterface,
   FilterUpdate,
   ProductInterface,
-} from "@/interfaces";
-import ShopProductList from "./ShopProductList.vue";
-import ShopFilters from "./ShopFilters.vue";
-import Calc from "@/components/Calc-component.vue";
+} from "@/shared/interfaces";
+
 import { reactive } from "vue";
 
 const state = reactive<{
   open: boolean;
   isMobile: boolean;
 }>({
-  open: matchMedia("(max-width: 575px)").matches,
+  open: !matchMedia("(max-width: 575px)").matches,
   isMobile: matchMedia("( max-width: 575px )").matches,
 });
 
 defineProps<{
   products: ProductInterface[];
   filters: FiltersInterface;
+  page: number;
   moreResults: boolean;
 }>();
 
@@ -32,7 +35,11 @@ const emit = defineEmits<{
 
 <template>
   <div class="d-flex shop-container">
-    <Calc :open="state.open" :transparent="true" @close="state.open = false" />
+    <Calc
+      :open="state.open && state.isMobile"
+      :transparent="true"
+      @close="state.open = false"
+    />
     <transition>
       <ShopFilters
         class="shop-filter"
@@ -54,6 +61,7 @@ const emit = defineEmits<{
         class="flex-fill scrollable"
         :products="products"
         :more-results="moreResults"
+        :page="page"
         @add-product-to-cart="emit('addProductToCart', $event)"
         @inc-page="emit('incPage')"
       />
@@ -65,7 +73,7 @@ const emit = defineEmits<{
 @use "@/assets/scss/mixin";
 .shop-filter {
   flex: 0 0 200px;
-  @include mixin.sm {
+  @include mixin.xs {
     position: absolute;
     top: 0;
     left: 0;

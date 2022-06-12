@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { ProductCartInterface } from "@/interfaces";
-import { computed, reactive } from "vue";
 import CartProductList from "./CartProductList.vue";
 import Calc from "@/components/Calc-component.vue";
+
+import type { ProductCartInterface } from "@/shared/interfaces";
+import { computed, reactive } from "vue";
 
 const state = reactive<{
   open: boolean;
